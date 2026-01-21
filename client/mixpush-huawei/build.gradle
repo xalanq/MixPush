@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 
 
 android {
+    namespace "com.mixpush.huawei"
+
     compileSdkVersion 34
 
     defaultConfig {

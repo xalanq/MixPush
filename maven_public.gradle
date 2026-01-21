@@ -1,70 +1,79 @@
 group = GROUP_ID
 version = VERSION_NAME
-apply plugin: 'maven'
-apply plugin: 'signing'
-signing {
-    sign configurations.archives
-}
+apply plugin: 'maven-publish'
 
 boolean isAndroid = project.getPlugins().hasPlugin('com.android.library')
 if (isAndroid) {
     task androidJavadocs(type: Javadoc) {
         source = android.sourceSets.main.java.source
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        classpath += project.files(android.getBootClasspath())
         excludes = ['**/*.kt']
+        failOnError = false
     }
     task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-        classifier = 'javadoc'
+        archiveClassifier.set('javadoc')
         from androidJavadocs.destinationDir
     }
     task androidSourcesJar(type: Jar) {
-        classifier = 'sources'
+        archiveClassifier.set('sources')
         from android.sourceSets.main.java.source
     }
 } else {
-    task javadocJar(type: Jar) {
-        classifier = 'javadoc'
-        from javadoc
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        archiveClassifier.set('javadoc')
+        from javadoc.destinationDir
     }
     task sourcesJar(type: Jar) {
-        classifier = 'sources'
+        archiveClassifier.set('sources')
         from sourceSets.main.allSource
     }
-    artifacts {
-        archives javadocJar, sourcesJar
-    }
 }
-uploadArchives {
+
+publishing {
     repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: OSSRH_USERNAME, password: OSSRH_PASSWORD)
+        maven {
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            credentials {
+                username = OSSRH_USERNAME
+                password = OSSRH_PASSWORD
             }
-            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: OSSRH_USERNAME, password: OSSRH_PASSWORD)
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            if (isAndroid) {
+                artifact androidSourcesJar
+                artifact androidJavadocsJar
+            } else {
+                artifact sourcesJar
+                artifact javadocJar
             }
-            pom.project {
-                name POM_NAME
+
+            pom {
+                name = POM_NAME
+                description = POM_DESCRIPTION
+                url = POM_URL
                 packaging isAndroid ? 'jar' : 'aar'
-                description POM_DESCRIPTION
-                url POM_URL
                 scm {
-                    connection POM_SCM_CONNECTION
-                    developerConnection POM_SCM_DEV_CONNECTION
-                    url POM_SCM_URL
+                    connection = POM_SCM_CONNECTION
+                    developerConnection = POM_SCM_DEV_CONNECTION
+                    url = POM_SCM_URL
                 }
                 licenses {
                     license {
-                        name POM_LICENCE_NAME
-                        url POM_LICENCE_URL
+                        name = POM_LICENCE_NAME
+                        url = POM_LICENCE_URL
                     }
                 }
                 developers {
                     developer {
-                        id POM_DEVELOPER_ID
-                        name POM_DEVELOPER_NAME
-                        email POM_DEVELOPER_EMAIL
+                        id = POM_DEVELOPER_ID
+                        name = POM_DEVELOPER_NAME
+                        email = POM_DEVELOPER_EMAIL
                     }
                 }
             }

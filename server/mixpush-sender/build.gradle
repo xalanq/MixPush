@@ -8,7 +8,6 @@ dependencies {
     // api project(path: ':huaweipush-server-sdk')
     api 'io.github.mixpush:mipush-server-sdk:2.3.0'
     api 'io.github.mixpush:vpush-server-sdk:2.3.8'
-    api 'com.meizu.flyme:push-server-sdk:1.2.9.20211111_release'
     api 'com.googlecode.json-simple:json-simple:1.1'
     // apns
     api 'cn.teaey.apns4j:apns4j:1.1.4'

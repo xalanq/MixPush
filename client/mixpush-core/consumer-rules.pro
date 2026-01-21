@@ -1,6 +1,5 @@
 # MixPush
 -keep class com.mixpush.mi.MiPushProvider {*;}
--keep class com.mixpush.meizu.MeizuPushProvider {*;}
 -keep class com.mixpush.huawei.HuaweiPushProvider {*;}
 -keep class com.mixpush.oppo.OppoPushProvider {*;}
 -keep class com.mixpush.vivo.VivoPushProvider {*;}
@@ -27,7 +26,4 @@
 -dontwarn com.vivo.push.** 
 -keep class com.vivo.push.**{*; } 
 -keep class com.vivo.vms.**{*; }
-
-# 魅族
--keep class com.meizu.**{*;}
 

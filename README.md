@@ -6,7 +6,7 @@
 
 基于 [统一推送联盟](http://chinaupa.com/) 的思想，快速集成了六个厂商的推送平台，共享系统的厂商推送通道，避免APP需要长期在后台运行，杀死APP也能收到推送，大大提高推送到达率。接入有一定的开发成本，需要前后端一起参与才可以完成，如果遇到什么问题可以发Issue提问解答。
 
-1. 开发者只需要少量代码即可集成 小米、华为、魅族、OPPO、VIVO，苹果的厂商推送；
+1. 开发者只需要少量代码即可集成 小米、华为、OPPO、VIVO，苹果的厂商推送；
 
 2. 根据手机厂商推送的支持情况智能选择不同的推送；
 
@@ -33,7 +33,6 @@
 | [华为推送](https://developer.huawei.com/consumer/cn/console) | 支持   | 不支持   | 不支持    | 仅华为设备，部分EMUI4.0和4.1，及EMUI5.0及之后的华为设备。    |
 | [OPPO推送](https://push.oppo.com)                            | 不支持 | 支持     | 支持      | 仅OPPO和一加手机，支持ColorOS3.1及以上的系统。               |
 | [VIVO推送](https://dev.vivo.com.cn/openAbility/pushNews)     | 不支持 | 支持     | 支持      | 仅VIVO手机，部分 Android 9.0，及 9.0 以上手机                |
-| [魅族推送](http://open-wiki.flyme.cn/doc-wiki/index#id?129)  | 不支持 | 支持     | 支持      | 仅魅族手机，Flyme系统全平台                                  |
 | [APNs](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns) | 不支持 | 不支持   | 不支持    | 仅苹果设备                                                   |
 | [小米推送 APNs](https://dev.mi.com/console/doc/detail?pId=98) | 不支持 | 支持     | 支持      | 仅苹果设备，代替APNs，可以有效降低服务器压力                 |
 ##### 建议
@@ -77,7 +76,7 @@ allprojects {
 ```
 #### 修改 app 目录的 build.gradle 
 
-小米、VIVO和魅族需要在推送管理后台创建项目并且把对应的APP_ID和APP_KEY配置到文件中，OPPO比较特殊，是配置 APP_KEY 和 APP_SECRET。
+小米、VIVO需要在推送管理后台创建项目并且把对应的APP_ID和APP_KEY配置到文件中，OPPO比较特殊，是配置 APP_KEY 和 APP_SECRET。
 
 ```groovy
 apply plugin: 'com.huawei.agconnect'
@@ -91,15 +90,12 @@ android {
         manifestPlaceholders["MI_APP_KEY"] = "<MI_APP_KEY>"
         manifestPlaceholders["OPPO_APP_KEY"] = "<OPPO_APP_KEY>"
         manifestPlaceholders["OPPO_APP_SECRET"] = "<OPPO_APP_SECRET>"
-        manifestPlaceholders["MEIZU_APP_ID"] = "<MEIZU_APP_ID>"
-        manifestPlaceholders["MEIZU_APP_KEY"] = "<MEIZU_APP_KEY>"
     }
 }
 dependencies {
     def mixpush_version = '2.4.0'
     implementation "io.github.mixpush:mixpush-core:$mixpush_version" // 核心包
     implementation "io.github.mixpush:mixpush-mi:$mixpush_version" // 小米推送
-    implementation "io.github.mixpush:mixpush-meizu:$mixpush_version"  // 魅族推送
     implementation "io.github.mixpush:mixpush-huawei:$mixpush_version"  // 华为推送
     implementation "io.github.mixpush:mixpush-oppo:$mixpush_version"  // OPPO推送
     implementation "io.github.mixpush:mixpush-vivo:$mixpush_version"  // VIVO推送
@@ -144,7 +140,7 @@ public class MyPushReceiver extends MixPushReceiver {
 // 开启日志
 //MixPush.getInstance().setLogger(new PushLogger(){});
 MixPush.getInstance().setPushReceiver(new MyPushReceiver());
-// 默认初始化5个推送平台（小米推送、华为推送、魅族推送、OPPO推送、VIVO推送），以小米推荐作为默认平台
+// 默认初始化5个推送平台（小米推送、华为推送、OPPO推送、VIVO推送），以小米推荐作为默认平台
 MixPush.getInstance().register(this);
 ```
 获取regId，建议在首页的onCreate调用,并上报regId给服务端
@@ -169,7 +165,6 @@ MixPushClient.getInstance().getRegisterId(this, new GetRegisterIdCallback() {
 ```
 # MixPush
 -keep class com.mixpush.mi.MiPushProvider {*;}
--keep class com.mixpush.meizu.MeizuPushProvider {*;}
 -keep class com.mixpush.huawei.HuaweiPushProvider {*;}
 -keep class com.mixpush.oppo.OppoPushProvider {*;}
 -keep class com.mixpush.vivo.VivoPushProvider {*;}
@@ -196,9 +191,6 @@ MixPushClient.getInstance().getRegisterId(this, new GetRegisterIdCallback() {
 -dontwarn com.vivo.push.** 
 -keep class com.vivo.push.**{*; } 
 -keep class com.vivo.vms.**{*; }
-
-# 魅族
--keep class com.meizu.**{*;}
 
 ```
 
@@ -238,7 +230,6 @@ class MixPushServerExample {
         MixPushSender sender = new MixPushSender.Builder()
                 .packageName("<packageName>")
                 .mi("<appSecretKey>",false)
-                .meizu("<appId>", "<appSecretKey>")
                 .huawei("<appId>", "<appSecretKey>")
                 .oppo("<appKey>", "<masterSecret>")
                 .vivo("<appId>", "<appKey>", "<appSecretKey>")
@@ -306,10 +297,6 @@ class MixPushServerExample {
 3. 正式消息分为运营消息和系统消息，两者每日限制发送量均根据SDK订阅数推算，SDK订阅数小于10000，按10000计数；大于10000，则等于SDK订阅数。
 4. 运营推送vivoSystemMessage必须设置为false，否则会被禁用推送功能。
 
-##### [魅族推送](http://open-wiki.flyme.cn/doc-wiki/index#id?130)
-
-1. 无需区分运营推送和系统消息。
-
 ##### [华为推送](https://developer.huawei.com/consumer/cn/doc/development/HMS-2-References/hmssdk_huaweipush_api_reference_errorcode)
 
 1. 不支持全局推送，需要从数据库查询所有的regId进行推送，建议不要查询超过3个月没有打开APP的regId，降低推送压力。
@@ -336,7 +323,6 @@ class MixPushServerExample {
 - [华为渠道适配](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/push-other#channel_id)
 - [OPPO渠道适配](https://open.oppomobile.com/wiki/doc#id=10289)
 - [vivo推送消息分类功能说明](https://dev.vivo.com.cn/documentCenter/doc/359)
-- 魅族不支持配置渠道
 - [小米推送适配渠道](https://dev.mi.com/console/doc/detail?pId=2086#faq-permission) 
 
 
@@ -352,15 +338,15 @@ class MixPushServerExample {
 
 ## 测试报告
 mi代表使用小米推送，huawei代表是使用华为推送。ok代表通过、- 代表没有测试设备、error代表异常。
-| Android系统 | 小米手机 | 华为手机 | 魅族手机 | OPPO手机 | VIVO手机 | 一加手机 |
+| Android系统 | 小米手机 | 华为手机 | OPPO手机 | VIVO手机 | 一加手机 |
 | ------ | -------- | -------- | -------- | -------- | -------- | --------  |
-| 4.4 | mi, ok | mi, ok | - | mi, ok | mi, ok | -  |
-| 5.x  | mi, ok | mi, ok | meizu, ok | mi, ok | mi, ok | mi, ok |
-| 6.x  | mi, ok | mi, ok | meizu, ok | mi, ok | mi, ok | - |
-| 7.x  | mi, ok | huawei, ok | meizu, ok | oppo, ok | mi, ok | mi, ok |
-| 8.x  | mi, ok | huawei, ok | meizu, ok | oppo, ok | mi, ok | mi, ok |
-| 9.x  | mi, ok | huawei, ok | meizu, ok | oppo, ok | vivo, ok | oppo, ok |
-| 10.x  | mi, ok | huawei, ok | meizu, ok | oppo, ok | vivo, ok | oppo, ok |
+| 4.4 | mi, ok | mi, ok | mi, ok | mi, ok | -  |
+| 5.x  | mi, ok | mi, ok | mi, ok | mi, ok | mi, ok |
+| 6.x  | mi, ok | mi, ok | mi, ok | mi, ok | - |
+| 7.x  | mi, ok | huawei, ok | oppo, ok | mi, ok | mi, ok |
+| 8.x  | mi, ok | huawei, ok | oppo, ok | mi, ok | mi, ok |
+| 9.x  | mi, ok | huawei, ok | oppo, ok | vivo, ok | oppo, ok |
+| 10.x  | mi, ok | huawei, ok | oppo, ok | vivo, ok | oppo, ok |
 
 
 

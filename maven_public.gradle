@@ -1,10 +1,6 @@
 group = GROUP_ID
 version = VERSION_NAME
 apply plugin: 'maven'
-apply plugin: 'signing'
-signing {
-    sign configurations.archives
-}
 
 boolean isAndroid = project.getPlugins().hasPlugin('com.android.library')
 if (isAndroid) {
@@ -37,7 +33,6 @@ if (isAndroid) {
 uploadArchives {
     repositories {
         mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
             repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(userName: OSSRH_USERNAME, password: OSSRH_PASSWORD)
             }

@@ -1,7 +1,6 @@
 package com.mixpush.sender;
 
 import com.mixpush.sender.provider.HuaweiPushProvider;
-import com.mixpush.sender.provider.MeizuPushProvider;
 import com.mixpush.sender.provider.MiAPNsPushProvider;
 import com.mixpush.sender.provider.MiPushProvider;
 import com.mixpush.sender.provider.OppoPushProvider;
@@ -30,8 +29,6 @@ public class MixPushSender {
 
     private String miAppSecretKey = "";
     private String packageName = "";
-    private String meizuAppId;
-    private String meizuAppSecretKey;
     private String huaweiAppId;
     private String huaweiAppSecret;
     private String oppoAppKey;
@@ -59,9 +56,6 @@ public class MixPushSender {
         }
         if (miAPNsAppSecretKey != null) {
             addProvider(new MiAPNsPushProvider(miAPNsAppSecretKey, test));
-        }
-        if (meizuAppId != null) {
-            addProvider(new MeizuPushProvider(meizuAppId, meizuAppSecretKey));
         }
         if (huaweiAppId != null) {
             addProvider(new HuaweiPushProvider(huaweiAppId, huaweiAppSecret));
@@ -238,12 +232,6 @@ public class MixPushSender {
         public Builder huawei(String appId, String appSecret) {
             sender.huaweiAppId = appId;
             sender.huaweiAppSecret = appSecret;
-            return this;
-        }
-
-        public Builder meizu(String appId, String appSecretKey) {
-            sender.meizuAppId = appId;
-            sender.meizuAppSecretKey = appSecretKey;
             return this;
         }
 

@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace "com.heytap.mcssdk"
+
     compileSdkVersion 34
 
     defaultConfig {
@@ -27,8 +29,15 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation(name: 'com.heytap.msp_3.1.0', ext: 'aar')
     implementation project(path: ':mixpush-core')
     implementation 'commons-codec:commons-codec:1.6'
 }
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 apply from: '../../maven_public.gradle'

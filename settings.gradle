@@ -1,15 +1,16 @@
 //include ':example-server'
-include ':example'
+// include ':example'
 include ':mixpush-mi'
 include ':mixpush-oppo'
 include ':mixpush-vivo'
 include ':mixpush-huawei'
+include ':mixpush-honor'
 include ':mixpush-core'
 //include ':mixpush-server'
 //include ':mixpush-fcm'
 
 
-include ':mixpush-sender'
+// include ':mixpush-sender'
 
 //include ':huaweipush-server-sdk'
 
@@ -21,6 +22,7 @@ project(":mixpush-mi").projectDir = new File("client/mixpush-mi")
 project(":mixpush-oppo").projectDir = new File("client/mixpush-oppo")
 project(":mixpush-vivo").projectDir = new File("client/mixpush-vivo")
 project(":mixpush-huawei").projectDir = new File("client/mixpush-huawei")
+project(":mixpush-honor").projectDir = new File("client/mixpush-honor")
 project(":mixpush-core").projectDir = new File("client/mixpush-core")
 
-project(":mixpush-sender").projectDir = new File("client/mixpush-sender")
+// project(":mixpush-sender").projectDir = new File("client/mixpush-sender")

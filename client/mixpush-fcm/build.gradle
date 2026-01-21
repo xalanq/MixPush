@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace "com.mixpush.fcm"
+
     compileSdkVersion 30
 
 

@@ -19,13 +19,13 @@ android {
 }
 allprojects {
     repositories {
-        maven { url 'http://developer.huawei.com/repo/' }
+        maven { url 'https://developer.huawei.com/repo' }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':mixpush-core')
-    implementation 'com.huawei.hms:push:6.11.0.300'
+    implementation 'com.huawei.hms:push:6.13.0.301'
 }
 apply from: '../../maven_public.gradle'

@@ -3,6 +3,7 @@
 -keep class com.mixpush.huawei.HuaweiPushProvider {*;}
 -keep class com.mixpush.oppo.OppoPushProvider {*;}
 -keep class com.mixpush.vivo.VivoPushProvider {*;}
+-keep class com.mixpush.honor.HonorPushProvider {*;}
  
 # 华为推送
 -ignorewarnings
@@ -27,3 +28,11 @@
 -keep class com.vivo.push.**{*; } 
 -keep class com.vivo.vms.**{*; }
 
+# 荣耀推送
+-ignorewarnings
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-keep class com.hihonor.push.**{*;}

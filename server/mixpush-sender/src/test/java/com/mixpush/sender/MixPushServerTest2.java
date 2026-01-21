@@ -12,7 +12,6 @@ public class MixPushServerTest2 {
             .packageName("")
             // 如果使用小米推送作为全局透传通道，小米推送将不支持全局推送,请使用分组推送给所有用户
             .mi("", false)
-            .meizu("", "")
             .huawei("", "")
             .oppo("", "")
             .vivo("", "", "")
@@ -65,7 +64,6 @@ public class MixPushServerTest2 {
     private static final MixPushPlatform vivo_x27 = new MixPushPlatform("vivo", "15924658300146530281822");
     private static final MixPushPlatform vivo_x20a = new MixPushPlatform("vivo", "15933221621246530243564");
     private static final MixPushPlatform mi_m9_wiki = new MixPushPlatform("mi", "/WZ+BudUyTVO2ZuIWHufxgol2BH7O0fOFzjQ5W26UelRBCBAgsroKjmXSoEg3ScT");
-    private static final MixPushPlatform meizu_16th = new MixPushPlatform("meizu", "V5R5b79477f06007e6b4f754d6d625f4f4b507e477c01");
     private static final MixPushPlatform huawei_al00 = new MixPushPlatform("huawei", "AIBafNxB7yHUuAFVReoJ0EwYPAT1FYCMLODSiS0CPjnb2L1tiiTwTv1qZ06aGf7CDaitb9O9EzWKwH_uiZlubzkpURJmrFd3hk7waI-xuWxbJt3MlhodfUIsYXm3D-1Q9w");
 
 
@@ -94,7 +92,6 @@ public class MixPushServerTest2 {
         regIds.add(vivo_x27);
         regIds.add(vivo_x20a);
         regIds.add(mi_m9_wiki);
-        regIds.add(meizu_16th);
         regIds.add(huawei_al00);
         MixPushTarget target = MixPushTarget.list(regIds);
 //        MixPushResult result = sender.sendMessage(getAdMessage(), target);

@@ -18,8 +18,6 @@ android {
         manifestPlaceholders["MI_APP_KEY"] = EXAMPLE_MI_APP_KEY
         manifestPlaceholders["OPPO_APP_KEY"] = EXAMPLE_OPPO_APP_KEY
         manifestPlaceholders["OPPO_APP_SECRET"] = EXAMPLE_OPPO_APP_SECRET
-        manifestPlaceholders["MEIZU_APP_ID"] = EXAMPLE_MEIZU_APP_ID
-        manifestPlaceholders["MEIZU_APP_KEY"] = EXAMPLE_MEIZU_APP_KEY
     }
     signingConfigs {
         release {
@@ -56,7 +54,6 @@ dependencies {
 
     implementation project(path: ':mixpush-core')
     implementation project(path: ':mixpush-oppo')
-    implementation project(path: ':mixpush-meizu')
     implementation project(path: ':mixpush-vivo')
     implementation project(path: ':mixpush-huawei')
     implementation project(path: ':mixpush-mi')

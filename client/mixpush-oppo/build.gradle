@@ -6,19 +6,10 @@ android {
     compileSdkVersion 34
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 17
+
     }
 
-    repositories {
-        flatDir {
-            dirs 'libs'
-        }
-    }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
     buildTypes {
         release {
             minifyEnabled false
@@ -29,8 +20,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':mixpush-core')
-    implementation 'commons-codec:commons-codec:1.6'
 }
 apply from: '../../maven_public.gradle'

@@ -6,8 +6,8 @@
     <application>
         <service
             android:name="com.heytap.msp.push.service.CompatibleDataMessageCallbackService"
-            android:exported="false"
-            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
             </intent-filter>
@@ -15,8 +15,8 @@
 
         <service
             android:name="com.heytap.msp.push.service.DataMessageCallbackService"
-            android:exported="false"
-            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE">
+            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE"
+            android:exported="false">
 
             <intent-filter>
                 <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE" />
@@ -33,8 +33,8 @@
 
         <activity
             android:name="com.mixpush.oppo.OppoMessageReceiveActivity"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true">
             <intent-filter>
                 <data
                     android:host="com.mixpush.oppo"

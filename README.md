@@ -58,11 +58,11 @@ buildscript {
     repositories {
       	...
         mavenCentral()
-        maven { url 'http://developer.huawei.com/repo/' }
+        maven { url 'https://developer.huawei.com/repo/' }
     }
     dependencies {
         ...
-        classpath 'com.huawei.agconnect:agcp:1.6.0.300'
+        classpath 'com.huawei.agconnect:agcp:1.9.1.301'
     }
 }
 allprojects {
@@ -70,7 +70,7 @@ allprojects {
         ...
         mavenCentral()
         jcenter()
-        maven { url 'http://developer.huawei.com/repo/' }
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 }
 ```

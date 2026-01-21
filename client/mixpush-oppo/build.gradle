@@ -1,24 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    namespace "com.heytap.mcssdk"
+    namespace "com.mixpush.oppo"
 
     compileSdkVersion 34
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 17
+
     }
 
-    repositories {
-        flatDir {
-            dirs 'libs'
-        }
-    }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
     buildTypes {
         release {
             minifyEnabled false
@@ -29,8 +20,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':mixpush-core')
-    implementation 'commons-codec:commons-codec:1.6'
+    implementation 'com.heytap.msp:push:3.0.0'
 }
 apply from: '../../maven_public.gradle'
